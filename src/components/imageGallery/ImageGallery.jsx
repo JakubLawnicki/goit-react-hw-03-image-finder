@@ -2,10 +2,18 @@
 import styles from './imageGallery.module.css';
 import { ImageGalleryItem } from 'components/imageGalleryItem/ImageGalleryItem';
 
-export function ImageGallery() {
+export function ImageGallery({ list }) {
   return (
     <ul className={styles.gallery}>
-      <ImageGalleryItem />
+      {list.map(image => {
+        return (
+          <ImageGalleryItem
+            id={image.id}
+            url={image.imgUrl}
+            largeUrl={image.largeImgUrl}
+          />
+        );
+      })}
     </ul>
   );
 }

@@ -9,6 +9,7 @@ import axios from 'axios';
 export class App extends Component {
   state = {
     search: '',
+    imageList: [],
   };
 
   key = '39408745-32e39ba950214e66e33847e97';
@@ -25,12 +26,25 @@ export class App extends Component {
     const response = await axios.get(
       `https://pixabay.com/api/?q=${this.state.search}&page=1&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
     );
-    console.log(response.data);
+    const array = response.data.hits;
+    const newArray = array.map(item => {
+      return {
+        id: item.id,
+        imgUrl: item.webformatURL,
+        largeImgUrl: item.largeImageURL,
+      };
+    });
+
+    this.setState(prev => {
+      return {
+        imageList: prev.imageList.concat(newArray),
+      };
+    });
   };
 
   render() {
-    const { search } = this.state;
-    console.log(this.state);
+    const { search, imageList } = this.state;
+
     return (
       <div
         style={{
@@ -47,7 +61,7 @@ export class App extends Component {
           change={this.searchChange}
           inputValue={search}
         />
-        <ImageGallery />
+        <ImageGallery list={imageList} />
         <Button />
         <Loader />
         <Modal />
