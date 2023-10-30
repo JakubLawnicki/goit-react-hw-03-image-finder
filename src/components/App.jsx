@@ -18,12 +18,14 @@ export class App extends Component {
   searchChange = value => {
     this.setState(() => {
       return {
+        imageList: [],
         search: value,
+        currentPage: 1,
       };
     });
   };
 
-  loadMore = () => {
+  setCurrentPage = () => {
     this.setState(prev => {
       return {
         currentPage: prev.currentPage + 1,
@@ -33,7 +35,28 @@ export class App extends Component {
 
   searchSubmit = async () => {
     const response = await axios.get(
-      `https://pixabay.com/api/?q=${this.state.search}&page=${this.state.currentPage}&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
+      `https://pixabay.com/api/?q=${this.state.search}&page=1&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
+    );
+    const array = response.data.hits;
+    const newArray = array.map(item => {
+      return {
+        id: item.id,
+        imgUrl: item.webformatURL,
+        largeImgUrl: item.largeImageURL,
+      };
+    });
+
+    this.setState(prev => {
+      return {
+        imageList: prev.imageList.concat(newArray),
+      };
+    });
+  };
+
+  getMoreImages = async page => {
+    const current = page + 1;
+    const response = await axios.get(
+      `https://pixabay.com/api/?q=${this.state.search}&page=${current}&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
     );
     const array = response.data.hits;
     const newArray = array.map(item => {
@@ -52,8 +75,8 @@ export class App extends Component {
   };
 
   render() {
-    const { search, imageList } = this.state;
-
+    const { search, imageList, currentPage } = this.state;
+    console.log(this.state);
     return (
       <div
         style={{
@@ -71,7 +94,11 @@ export class App extends Component {
           inputValue={search}
         />
         <ImageGallery list={imageList} />
-        <Button load={this.loadMore} fetch={this.searchSubmit} />
+        <Button
+          load={this.setCurrentPage}
+          more={this.getMoreImages}
+          page={currentPage}
+        />
         <Loader />
         <Modal />
       </div>
