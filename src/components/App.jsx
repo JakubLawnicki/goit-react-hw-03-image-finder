@@ -10,6 +10,7 @@ export class App extends Component {
   state = {
     search: '',
     imageList: [],
+    currentPage: 1,
   };
 
   key = '39408745-32e39ba950214e66e33847e97';
@@ -22,9 +23,17 @@ export class App extends Component {
     });
   };
 
+  loadMore = () => {
+    this.setState(prev => {
+      return {
+        currentPage: prev.currentPage + 1,
+      };
+    });
+  };
+
   searchSubmit = async () => {
     const response = await axios.get(
-      `https://pixabay.com/api/?q=${this.state.search}&page=1&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
+      `https://pixabay.com/api/?q=${this.state.search}&page=${this.state.currentPage}&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
     );
     const array = response.data.hits;
     const newArray = array.map(item => {
@@ -50,7 +59,7 @@ export class App extends Component {
         style={{
           height: '100vh',
           display: 'flex',
-          justifyContent: 'center',
+          flexDirection: 'column',
           alignItems: 'center',
           fontSize: 40,
           color: '#010101',
@@ -62,7 +71,7 @@ export class App extends Component {
           inputValue={search}
         />
         <ImageGallery list={imageList} />
-        <Button />
+        <Button load={this.loadMore} fetch={this.searchSubmit} />
         <Loader />
         <Modal />
       </div>

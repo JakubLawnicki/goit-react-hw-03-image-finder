@@ -1,9 +1,16 @@
 // import PropTypes from 'prop-types';
 import styles from './button.module.css';
 
-export function Button() {
+export function Button({ load, fetch }) {
   return (
-    <button type="button" className={styles['load-button']}>
+    <button
+      onClick={() => {
+        load();
+        fetch();
+      }}
+      type="button"
+      className={styles['load-button']}
+    >
       Load more
     </button>
   );
