@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Searchbar } from './searchbar/Searchbar';
 import { ImageGallery } from './imageGallery/ImageGallery';
-import { Button } from './button/Button';
+
 import { Loader } from './loader/Loader';
 import { Modal } from './modal/Modal';
 import axios from 'axios';
@@ -21,6 +21,7 @@ export class App extends Component {
         imageList: [],
         search: value,
         currentPage: 1,
+        totalHitsValue: 0,
       };
     });
   };
@@ -38,6 +39,7 @@ export class App extends Component {
       `https://pixabay.com/api/?q=${this.state.search}&page=1&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
     );
     const array = response.data.hits;
+    const total = response.data.totalHits;
     const newArray = array.map(item => {
       return {
         id: item.id,
@@ -49,6 +51,7 @@ export class App extends Component {
     this.setState(prev => {
       return {
         imageList: prev.imageList.concat(newArray),
+        totalHitsValue: total,
       };
     });
   };
@@ -75,7 +78,7 @@ export class App extends Component {
   };
 
   render() {
-    const { search, imageList, currentPage } = this.state;
+    const { search, imageList, currentPage, totalHitsValue } = this.state;
     console.log(this.state);
     return (
       <div
@@ -93,12 +96,14 @@ export class App extends Component {
           change={this.searchChange}
           inputValue={search}
         />
-        <ImageGallery list={imageList} />
-        <Button
+        <ImageGallery
+          list={imageList}
           load={this.setCurrentPage}
           more={this.getMoreImages}
           page={currentPage}
+          total={totalHitsValue}
         />
+
         <Loader />
         <Modal />
       </div>
