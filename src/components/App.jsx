@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import { Searchbar } from './searchbar/Searchbar';
 import { ImageGallery } from './imageGallery/ImageGallery';
-
-import { Loader } from './loader/Loader';
-import { Modal } from './modal/Modal';
 import axios from 'axios';
 
 export class App extends Component {
@@ -11,9 +8,18 @@ export class App extends Component {
     search: '',
     imageList: [],
     currentPage: 1,
+    modal: false,
   };
 
   key = '39408745-32e39ba950214e66e33847e97';
+
+  openCloseModal = () => {
+    this.setState(prev => {
+      return {
+        modal: !prev.modal,
+      };
+    });
+  };
 
   searchChange = value => {
     this.setState(() => {
@@ -78,8 +84,9 @@ export class App extends Component {
   };
 
   render() {
-    const { search, imageList, currentPage, totalHitsValue } = this.state;
-    console.log(this.state);
+    const { search, imageList, currentPage, totalHitsValue, modal } =
+      this.state;
+    // console.log(this.state);
     return (
       <div
         style={{
@@ -102,10 +109,9 @@ export class App extends Component {
           more={this.getMoreImages}
           page={currentPage}
           total={totalHitsValue}
+          modal={modal}
+          openCloseModal={this.openCloseModal}
         />
-
-        <Loader />
-        <Modal />
       </div>
     );
   }
