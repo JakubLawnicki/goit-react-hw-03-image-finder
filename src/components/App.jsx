@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Searchbar } from './searchbar/Searchbar';
 import { ImageGallery } from './imageGallery/ImageGallery';
+import { Loader } from './loader/Loader';
 import axios from 'axios';
 
 export class App extends Component {
@@ -9,11 +10,21 @@ export class App extends Component {
     imageList: [],
     currentPage: 1,
     modal: false,
+    selectedImage: 0,
   };
 
   key = '39408745-32e39ba950214e66e33847e97';
 
-  openCloseModal = () => {
+  openModal = image => {
+    this.setState(prev => {
+      return {
+        modal: !prev.modal,
+        selectedImage: image,
+      };
+    });
+  };
+
+  closeModal = () => {
     this.setState(prev => {
       return {
         modal: !prev.modal,
@@ -84,9 +95,15 @@ export class App extends Component {
   };
 
   render() {
-    const { search, imageList, currentPage, totalHitsValue, modal } =
-      this.state;
-    // console.log(this.state);
+    const {
+      search,
+      imageList,
+      currentPage,
+      totalHitsValue,
+      modal,
+      selectedImage,
+    } = this.state;
+    console.log(this.state);
     return (
       <div
         style={{
@@ -110,7 +127,9 @@ export class App extends Component {
           page={currentPage}
           total={totalHitsValue}
           modal={modal}
-          openCloseModal={this.openCloseModal}
+          openModal={this.openModal}
+          closeModal={this.closeModal}
+          selectedImage={selectedImage}
         />
       </div>
     );

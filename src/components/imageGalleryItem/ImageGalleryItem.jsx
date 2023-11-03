@@ -1,13 +1,13 @@
 // import PropTypes from 'prop-types';
 import styles from './imageGalleryItem.module.css';
 
-export function ImageGalleryItem({ id, url, openCloseModal }) {
+export function ImageGalleryItem({ id, url, openModal }) {
   return (
     <li
       id={id}
       className={styles['gallery-item']}
       onClick={() => {
-        openCloseModal();
+        openModal();
       }}
     >
       <img src={url} alt="" />

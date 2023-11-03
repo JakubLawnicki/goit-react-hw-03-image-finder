@@ -11,7 +11,9 @@ export function ImageGallery({
   page,
   total,
   modal,
-  openCloseModal,
+  openModal,
+  closeModal,
+  selectedImage,
 }) {
   const renderLoadMoreButton = () => {
     if (total > 12) {
@@ -24,18 +26,18 @@ export function ImageGallery({
       <ul className={styles.gallery}>
         {list.map(image => {
           return (
-            <>
+            <div key={image.id}>
               <ImageGalleryItem
                 id={image.id}
                 url={image.imgUrl}
-                openCloseModal={openCloseModal}
+                openModal={() => openModal(image)}
               />
               <Modal
-                largeUrl={image.largeImgUrl}
+                largeUrl={selectedImage.largeImgUrl}
                 modal={modal}
-                closeModal={openCloseModal}
+                closeModal={closeModal}
               />
-            </>
+            </div>
           );
         })}
       </ul>
