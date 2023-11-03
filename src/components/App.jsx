@@ -11,6 +11,7 @@ export class App extends Component {
     currentPage: 1,
     modal: false,
     selectedImage: 0,
+    loading: false,
   };
 
   key = '39408745-32e39ba950214e66e33847e97';
@@ -39,6 +40,7 @@ export class App extends Component {
         search: value,
         currentPage: 1,
         totalHitsValue: 0,
+        loading: false,
       };
     });
   };
@@ -51,7 +53,26 @@ export class App extends Component {
     });
   };
 
+  setLoadingState = () => {
+    this.setState(() => {
+      return {
+        loading: true,
+      };
+    });
+  };
+
+  renderLoader = () => {
+    if (this.state.loading === true) {
+      return <Loader />;
+    }
+    return null;
+  };
+  componentDidMount() {
+    this.renderLoader();
+  }
+
   searchSubmit = async () => {
+    this.setLoadingState();
     const response = await axios.get(
       `https://pixabay.com/api/?q=${this.state.search}&page=1&key=${this.key}&image_type=photo&orientation=horizontal&per_page=12`
     );
@@ -69,6 +90,7 @@ export class App extends Component {
       return {
         imageList: prev.imageList.concat(newArray),
         totalHitsValue: total,
+        loading: false,
       };
     });
   };
