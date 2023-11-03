@@ -21,9 +21,9 @@ export function Searchbar({ onSubmit, inputValue, change }) {
             change(e.target.value);
           }}
           type="text"
-          autocomplete="off"
+          autoComplete="off"
           value={inputValue}
-          autofocus
+          autoFocus
           placeholder="Search images and photos"
         />
       </form>
