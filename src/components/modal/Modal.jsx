@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './modal.module.css';
 
 export function Modal({ largeUrl, modal, closeModal }) {
@@ -19,3 +19,9 @@ export function Modal({ largeUrl, modal, closeModal }) {
   }
   return null;
 }
+
+Modal.propTypes = {
+  largeUrl: PropTypes.string,
+  modal: PropTypes.bool,
+  closeModal: PropTypes.func,
+};

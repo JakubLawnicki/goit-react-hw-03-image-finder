@@ -10,7 +10,7 @@ export class App extends Component {
     imageList: [],
     currentPage: 1,
     modal: false,
-    selectedImage: 0,
+    selectedImage: {},
     loading: false,
   };
 

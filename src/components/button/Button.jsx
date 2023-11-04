@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './button.module.css';
 
 export function Button({ load, more, page }) {
@@ -16,3 +16,9 @@ export function Button({ load, more, page }) {
     </button>
   );
 }
+
+Button.propTypes = {
+  load: PropTypes.func,
+  more: PropTypes.func,
+  page: PropTypes.number,
+};

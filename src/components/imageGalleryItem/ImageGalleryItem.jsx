@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './imageGalleryItem.module.css';
 
 export function ImageGalleryItem({ id, url, openModal }) {
@@ -14,3 +14,9 @@ export function ImageGalleryItem({ id, url, openModal }) {
     </li>
   );
 }
+
+ImageGalleryItem.propTypes = {
+  id: PropTypes.number,
+  url: PropTypes.string,
+  openModal: PropTypes.func,
+};

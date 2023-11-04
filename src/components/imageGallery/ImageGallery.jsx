@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './imageGallery.module.css';
 import { ImageGalleryItem } from 'components/imageGalleryItem/ImageGalleryItem';
 import { Button } from 'components/button/Button';
@@ -25,6 +25,7 @@ export function ImageGallery({
     <>
       <ul className={styles.gallery}>
         {list.map(image => {
+          console.log(image);
           return (
             <div key={image.id}>
               <ImageGalleryItem
@@ -45,3 +46,15 @@ export function ImageGallery({
     </>
   );
 }
+
+ImageGallery.propTypes = {
+  list: PropTypes.array,
+  load: PropTypes.func,
+  more: PropTypes.func,
+  page: PropTypes.number,
+  total: PropTypes.number,
+  modal: PropTypes.bool,
+  openModal: PropTypes.func,
+  closeModal: PropTypes.func,
+  selectedImage: PropTypes.object,
+};

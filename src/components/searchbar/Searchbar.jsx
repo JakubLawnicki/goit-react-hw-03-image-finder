@@ -1,4 +1,4 @@
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import styles from './searchbar.module.css';
 
 export function Searchbar({ onSubmit, inputValue, change }) {
@@ -30,3 +30,9 @@ export function Searchbar({ onSubmit, inputValue, change }) {
     </header>
   );
 }
+
+Searchbar.propTypes = {
+  onSubmit: PropTypes.func,
+  inputValue: PropTypes.string,
+  change: PropTypes.func,
+};
