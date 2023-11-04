@@ -61,16 +61,6 @@ export class App extends Component {
     });
   };
 
-  renderLoader = () => {
-    if (this.state.loading === true) {
-      return <Loader />;
-    }
-    return null;
-  };
-  componentDidMount() {
-    this.renderLoader();
-  }
-
   searchSubmit = async () => {
     this.setLoadingState();
     const response = await axios.get(
@@ -124,8 +114,9 @@ export class App extends Component {
       totalHitsValue,
       modal,
       selectedImage,
+      loading,
     } = this.state;
-    console.log(this.state);
+
     return (
       <div
         style={{
@@ -142,17 +133,21 @@ export class App extends Component {
           change={this.searchChange}
           inputValue={search}
         />
-        <ImageGallery
-          list={imageList}
-          load={this.setCurrentPage}
-          more={this.getMoreImages}
-          page={currentPage}
-          total={totalHitsValue}
-          modal={modal}
-          openModal={this.openModal}
-          closeModal={this.closeModal}
-          selectedImage={selectedImage}
-        />
+        {loading ? (
+          <Loader />
+        ) : (
+          <ImageGallery
+            list={imageList}
+            load={this.setCurrentPage}
+            more={this.getMoreImages}
+            page={currentPage}
+            total={totalHitsValue}
+            modal={modal}
+            openModal={this.openModal}
+            closeModal={this.closeModal}
+            selectedImage={selectedImage}
+          />
+        )}
       </div>
     );
   }
